@@ -19,3 +19,10 @@ RUST_LOG=info cargo run How poem.txt
 How dreary to be somebody!
 How public, like a frog
 ```
+
+## Links and docs
+
+See https://www.rust-lang.org/what/cli and the [CLI book](https://rust-cli.github.io/book/index.html)
+from where I took the implementation of the integration tests.
+
+Also see [Rust by Example](https://doc.rust-lang.org/rust-by-example/testing/integration_testing.html)
