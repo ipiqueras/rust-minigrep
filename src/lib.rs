@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
 use std::error::Error;
+#[macro_use] extern crate log;
 
 pub struct Config {
     pub query: String,
@@ -28,8 +29,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.filename)?;
     //println!("with text:\n{}", contents);
     let results = if config.case_sensitive {
+        info!("Performing case sensitive search");
         search_case_sensitive(&config.query, &contents)
     } else {
+        info!("Performing case insensitive search");
         search_case_insensitive(&config.query, &contents)
     };
     for line in results {
@@ -44,6 +47,7 @@ pub fn search_case_sensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str>
 
     for line in contents.lines() {
         if line.contains(query) {
+            debug!("found match for query '{}' on line '{}'", query, line);
             results.push(line)
         }
     }

@@ -1,16 +1,19 @@
 use std::env;
 use std::process;
+#[macro_use] extern crate log;
 
 fn main() {
+    env_logger::init();
+
     let args: Vec<String> = env::args().collect();
     let config = minigrep::Config::new(&args).unwrap_or_else(|err| {
-        println!("Problem parsing arguments: {}", err);
+        eprintln!("Problem parsing arguments: {}", err);
         process::exit(1);
     });
-    println!("search: {}", config.query);
-    println!("in: {}", config.filename);
+    info!("searching: {}", config.query);
+    info!("in: {}", config.filename);
     if let Err(e) = minigrep::run(config) {
-        println!("Application error: {}", e);
+        eprintln!("Application error: {}", e);
         process::exit(1);
     }
 }
